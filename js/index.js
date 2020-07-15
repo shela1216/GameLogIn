@@ -107,34 +107,46 @@
 
                     (today.getMonth() + 1) + '月/' +
 
-                    today.getDate() + '日/' +
+                    today.getDate() + '日 ' +
 
-                    today.getHours() + ':' + today.getMinutes() +
+                    today.getHours() + ':' + today.getMinutes();
 
-                    ')';
-                var jsonData = {
-                    time: currentDateTime,
-                    GroupID: this.groupId,
-                    userID: this.userId,
-                    name: this.game,
-                    work: this.work
-                };
-                $.ajax({
-                    type: "post",
-                    url: "https://script.google.com/macros/s/AKfycbwWeqXrR6KRKNCyUwUIqNQGhD7GFVg2ImQLGcbaNknDhxWh-dU/exec",
-                    data: {
+                fetch("https://script.google.com/macros/s/AKfycbyq_Pqe593G_Z2kz3U2niiUGDOqDHx6-a8vTu8nKuZMz7oWKKU/exec", {
+                    method: 'POST',
+                    body: {
                         "time": currentDateTime,
-                        "GroupID":self.groupId,
+                        "groupID": self.groupId,
                         "userID": self.userId,
-                        "name": self.game,
-                        "work": self.work
+                        "name": self.gameName,
+                        "work": self.work,
+                        "game": self.game
                     },
-                    success: function (response) {
-                        if (response == "成功") {
-                            alert("成功::::" + no);
-                        }
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8',
                     }
+                }).then(response => {
+                    console.log("success:", response);
+                }).catch(err => {
+                    console.log("Error:" + err);
                 });
+                // $.ajax({
+                //     type: "post",
+                //     url: "https://script.google.com/macros/s/AKfycbyq_Pqe593G_Z2kz3U2niiUGDOqDHx6-a8vTu8nKuZMz7oWKKU/exec",
+                //     data: {
+                //         "time": currentDateTime,
+                //         "groupID": self.groupId,
+                //         "userID": self.userId,
+                //         "name": self.gameName,
+                //         "work": self.work,
+                //         "game": self.game
+                //     },
+
+                //     success: function (response) {
+                //         if (response == "成功") {
+                //             alert("成功::::" + no);
+                //         }
+                //     }
+                // });
 
             }
 
