@@ -67,8 +67,8 @@
             if (this.args.groupId && this.args.userId) {
                 this.groupId = this.args.groupId;
                 this.userId = this.args.userId;
-                this.lineName = BASE64.decode(this.args.UserName);
-                this.groupName= BASE64.decode(this.args.groupName);
+                this.lineName = decodeURIComponent(escape(window.atob(this.args.UserName)));
+                this.groupName= decodeURIComponent(escape(window.atob(this.args.groupName)));
                 this.AllowLogIn = true;
                 var self = this;
                 var hadInfo =false;
