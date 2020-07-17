@@ -7,112 +7,122 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>機器人簽到系統</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v1.0.3">
 </head>
 
 <body>
     <div id="main" v-cloak>
-        <div class="container" id="content">
-            <h1 class="h1">機器人簽到系統</h1>
-            <h2>By Shela V1.0.2 </h2>
-            <div class="row">
-                <div class="col col-12" v-if="AllowLogIn">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">GroupId</label>
-                            <label class="col-sm-10  text-left control-label">{{groupId}}</label>
+        <section>
+            <div class="container" id="content">
+                <div class="block-heading">
+                    <h2>機器人簽到系統</h2>
+                    <p>By Shela V1.0.2 </p>
+                </div>
+                <div class="row form-style">
+                    <div class="simpleInfo">
+                        <h3 class="title">Line資料</h3>
+                        <div class="item">
+                            <p class="item-name">ＧroupID</p>
+                            <p class="item-description">{{groupId}}</p>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">UserId</label>
-                            <label class="col-sm-10  text-left control-label">{{userId}}</label>
+                        <div class="item">
+                            <p class="item-name">UserId</p>
+                            <p class="item-description">{{userId}}</p>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Line暱稱</label>
-                            <label class="col-sm-10  text-left control-label">{{lineName}}</label>
+                        <div class="item">
+                            <p class="item-name">Line暱稱</p>
+                            <p class="item-description">{{lineName}}</p>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">遊戲</label>
-                            <label class="col-sm-10  text-left control-label">{{game}}</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="gameName" class="col-sm-2 control-label">遊戲暱稱</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="gameName" placeholder="請填寫遊戲內暱稱" v-model="gameName">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">遊戲職業</label>
-                            <div class="col-sm-10 text-left">
-                                <div class="radio-inline">
-                                    <label>
-                                        <input type="radio" name="work" id="work1" value="斧" v-model="work"> 斧
-                                    </label>
-                                </div>
-                                <div class="radio-inline">
-                                    <label>
-                                        <input type="radio" name="work" id="work2" value="棒" v-model="work"> 棒
-                                    </label>
-                                </div>
-                                <div class="radio-inline">
-                                    <label>
-                                        <input type="radio" name="work" id="work3" value="爪" v-model="work"> 爪
-                                    </label>
-                                </div>
-                                <div class="radio-inline">
-                                    <label>
-                                        <input type="radio" name="work" id="work4" value="槍" v-model="work"> 槍
-                                    </label>
-                                </div>
-                                <div class="radio-inline">
-                                    <label>
-                                        <input type="radio" name="work" id="work5" value="弓" v-model="work"> 弓
-                                    </label>
-                                </div>
-                                <div class="radio-inline">
-                                    <label>
-                                        <input type="radio" name="work" id="work6" value="迴旋鏢" v-model="work"> 迴旋鏢
-                                    </label>
-                                </div>
-                                <div class="radio-inline">
-                                    <label>
-                                        <input type="radio" name="work" id="work6" value="投斧" v-model="work"> 投斧
-                                    </label>
-                                </div>
-                                <div class="radio-inline">
-                                    <label>
-                                        <input type="radio" name="work" id="work6" value="投石" v-model="work"> 投石
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-sm-2 control-label">驗證碼(確認本人身分用)</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="password" placeholder="請輸入驗證碼" v-model="password">
-                            </div>
-                        </div>                        
-                        <div class="form-group" v-if="canSubmit">
-                            <div class="btn btn-primary btn-lg btn-lg" @click="submitForm">Sign in</div>
+                        <div class="item">
+                            <p class="item-name">遊戲</p>
+                            <p class="item-description">{{game}}</p>
                         </div>
                     </div>
-                </div>
-                <div class="col col-12" v-if="!AllowLogIn">
-                    <p class="bg-danger">驗證身分錯誤</p>
+                    <div class="detailform">
+                        <h3 class="title">遊戲資訊</h3>
+                        <div class="row">
+                            <div class="form-group col-sm-12">
+                                <label for="gameName">遊戲暱稱</label>
+                                <input id="gameName" type="text" class="form-control" placeholder="請填寫遊戲內暱稱"
+                                    v-model="gameName" aria-label="Card Holder" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label >遊戲職業</label>
+                                <div class="col-sm-12 text-left">
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" name="work" id="work1" value="斧" v-model="work"> 斧
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" name="work" id="work2" value="棒" v-model="work"> 棒
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" name="work" id="work3" value="爪" v-model="work"> 爪
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" name="work" id="work4" value="槍" v-model="work"> 槍
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" name="work" id="work5" value="弓" v-model="work"> 弓
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" name="work" id="work6" value="迴旋鏢" v-model="work"> 迴旋鏢
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" name="work" id="work6" value="投斧" v-model="work"> 投斧
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" name="work" id="work6" value="投石" v-model="work"> 投石
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label  for="password">驗證碼(確認本人身分用)</label>
+                                <input id="password" type="password" class="form-control" placeholder="請輸入驗證碼"
+                                    v-model="password" aria-label="Card Holder" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="form-group col-sm-12" v-if="canSubmit">
+                                <div  class="btn btn-primary btn-block" @click="submitForm">送出</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-12" v-if="!AllowLogIn">
+                        <p class="bg-danger">驗證身分錯誤</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+
     </div>
 
 
-    <!-- <script src="js/vue.min.js"></script> -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js'></script>
+    <script src="js/vue.min.js"></script>
+    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js'></script> -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.16.1-2020615181619/firebase-firestore.min.js"></script>
-    
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.16.1-2020615181619/firebase-firestore.min.js"></script>
+
 
     <script>
         // Your web app's Firebase configuration
@@ -138,7 +148,7 @@
         }
     </script>
     <script src="js/b64.js"></script>
-    <script src="js/index.js?v1.0.2"></script>
+    <script src="js/index.js?v1.0.3"></script>
 </body>
 
 </html>
