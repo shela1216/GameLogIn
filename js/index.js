@@ -6,11 +6,13 @@
         AllowLogIn: false,
         groupId: "",
         userId: "",
+        password:"",
         game: game,
         params: params,
         gameName: "",
         isFirst: true,
         work: "",
+        loading:false
     }
     var vm = new Vue({
         el: "#main",
@@ -47,7 +49,7 @@
                 return ret;
             },
             canSubmit: function () {
-                if (this.gameName != "" && this.work != "") {
+                if (this.gameName != "" && this.work != "" && this.loading!=true) {
                     return true
                 } else {
                     return false
@@ -63,31 +65,30 @@
                 this.groupId = this.args.groupId;
                 this.userId = this.args.userId;
                 this.isFirst = (this.args.isFirst == '1') ? false : true;
-                if (this.isFirst == true) {
-                    this.AllowLogIn = true;
-                } else {
+                // var xhr = new XMLHttpRequest();
+                // var self = this;
+                // self.AllowLogIn = true;
+                // xhr.open("GET", "https://spreadsheets.google.com/feeds/list/1K8IaCofyQGbxJD9tvzAWthDGGUyM_JwYuNhgBKbpSsA/1/public/values?alt=json");
+                // xhr.send();
+                // xhr.onreadystatechange = function () {
+                //     if (xhr.readyState == 4) {
+                //         if (xhr.status == 200) {
+                //             var data = JSON.parse(xhr.responseText);
+                //             var ListData = [];
+                //             var str;
+                //             if(data['feed']['entry']){
+                //                 for (var i = 0; i < data['feed']['entry'].length; i++) {
+                //                     if (data['feed']['entry'][i]['gsx$groupid']['$t'] == self.groupId && data['feed']['entry'][i]['gsx$userid']['$t'] == self.userId) {
+                //                         self.gameName = data['feed']['entry'][i]['gsx$gamename']['$t'];
+                //                         self.work = data['feed']['entry'][i]['gsx$gamework']['$t'];
+                                       
+                //                     }
+                //                 }
+                //             }
 
-                    var xhr = new XMLHttpRequest();
-                    var self = this;
-                    xhr.open("GET", "https://spreadsheets.google.com/feeds/list/1K8IaCofyQGbxJD9tvzAWthDGGUyM_JwYuNhgBKbpSsA/1/public/values?alt=json");
-                    xhr.send();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4) {
-                            if (xhr.status == 200) {
-                                var data = JSON.parse(xhr.responseText);
-                                var ListData = [];
-                                var str;
-                                for (var i = 0; i < data['feed']['entry'].length; i++) {
-                                    if (data['feed']['entry'][i]['gsx$GroupID']['$t'] == this.groupId && data['feed']['entry'][i]['gsx$userID']['$t'] == this.userId) {
-                                        this.gameName = data['feed']['entry'][i]['gsx$GameName']['$t'];
-                                        this.GameWork = data['feed']['entry'][i]['gsx$Work']['$t'];
-                                        this.AllowLogIn = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                //         }
+                //     }
+                // }
 
             }
 
@@ -101,6 +102,7 @@
             submitForm: function () {
                 var today = new Date();
                 var self = this;
+                this.loading=true;
                 var currentDateTime =
 
                     today.getFullYear() + '/' +
@@ -110,25 +112,6 @@
                     today.getDate() + '日 ' +
 
                     today.getHours() + ':' + today.getMinutes();
-
-                fetch("https://script.google.com/macros/s/AKfycbyq_Pqe593G_Z2kz3U2niiUGDOqDHx6-a8vTu8nKuZMz7oWKKU/exec", {
-                    method: 'POST',
-                    body: {
-                        "time": currentDateTime,
-                        "groupID": self.groupId,
-                        "userID": self.userId,
-                        "name": self.gameName,
-                        "work": self.work,
-                        "game": self.game
-                    },
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8',
-                    }
-                }).then(response => {
-                    console.log("success:", response);
-                }).catch(err => {
-                    console.log("Error:" + err);
-                });
                 // $.ajax({
                 //     type: "post",
                 //     url: "https://script.google.com/macros/s/AKfycbyq_Pqe593G_Z2kz3U2niiUGDOqDHx6-a8vTu8nKuZMz7oWKKU/exec",
@@ -142,9 +125,8 @@
                 //     },
 
                 //     success: function (response) {
-                //         if (response == "成功") {
-                //             alert("成功::::" + no);
-                //         }
+                //         alert("簽到成功");
+                //         window.location.reload();
                 //     }
                 // });
 
