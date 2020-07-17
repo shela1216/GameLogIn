@@ -51,7 +51,7 @@
                 return ret;
             },
             canSubmit: function () {
-                if (this.gameName != "" && this.work != "" && this.loading != true) {
+                if (this.gameName != "" && this.work != "" && this.loading != true &&this.password!="") {
                     return true
                 } else {
                     return false
