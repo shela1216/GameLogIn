@@ -14,7 +14,7 @@
     <div id="main" v-cloak>
         <div class="container" id="content">
             <h1 class="h1">機器人簽到系統</h1>
-            <h2>By 星樂園★兔兔米果 </h2>
+            <h2>By Shela V1.0.0 </h2>
             <div class="row">
                 <div class="col col-12" v-if="AllowLogIn">
                     <div class="form-horizontal">
@@ -108,10 +108,11 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js'></script>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
-
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.16.1-2020615181619/firebase-firestore.min.js"></script>
+    
 
     <script>
         // Your web app's Firebase configuration
@@ -128,6 +129,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
+        var db = firebase.firestore();
         var url = window.location.href;
         var params = "";
         var game = "石器時代";

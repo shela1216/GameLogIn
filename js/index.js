@@ -1,19 +1,20 @@
 (function (window) {
-    var ua = navigator.userAgent.toLowerCase() || navigator.vendor || window.opera; 
+    var ua = navigator.userAgent.toLowerCase() || navigator.vendor || window.opera;
     var data = {
         searchTxt: "",
         viewHeight: document.body.clientHeight,
         AllowLogIn: false,
         groupId: "",
         userId: "",
-        password:"",
+        password: "",
         game: game,
-        lineName:"",
+        lineName: "",
         params: params,
         gameName: "",
         isFirst: true,
         work: "",
-        loading:false
+        loading: false,
+        ref: db.collection('botMember'),
     }
     var vm = new Vue({
         el: "#main",
@@ -50,7 +51,7 @@
                 return ret;
             },
             canSubmit: function () {
-                if (this.gameName != "" && this.work != "" && this.loading!=true) {
+                if (this.gameName != "" && this.work != "" && this.loading != true) {
                     return true
                 } else {
                     return false
@@ -65,32 +66,29 @@
             if (this.args.groupId && this.args.userId) {
                 this.groupId = this.args.groupId;
                 this.userId = this.args.userId;
-                this.lineName = b64.decode64(this.args.UserName) 
-                this.isFirst = (this.args.isFirst == '1') ? false : true;
-                // var xhr = new XMLHttpRequest();
-                // var self = this;
-                // self.AllowLogIn = true;
-                // xhr.open("GET", "https://spreadsheets.google.com/feeds/list/1K8IaCofyQGbxJD9tvzAWthDGGUyM_JwYuNhgBKbpSsA/1/public/values?alt=json");
-                // xhr.send();
-                // xhr.onreadystatechange = function () {
-                //     if (xhr.readyState == 4) {
-                //         if (xhr.status == 200) {
-                //             var data = JSON.parse(xhr.responseText);
-                //             var ListData = [];
-                //             var str;
-                //             if(data['feed']['entry']){
-                //                 for (var i = 0; i < data['feed']['entry'].length; i++) {
-                //                     if (data['feed']['entry'][i]['gsx$groupid']['$t'] == self.groupId && data['feed']['entry'][i]['gsx$userid']['$t'] == self.userId) {
-                //                         self.gameName = data['feed']['entry'][i]['gsx$gamename']['$t'];
-                //                         self.work = data['feed']['entry'][i]['gsx$gamework']['$t'];
-                                       
-                //                     }
-                //                 }
-                //             }
+                this.lineName = b64.decode64(this.args.UserName)
+                this.AllowLogIn = true;
+                var self = this;
+                var hadInfo =false;
+                this.ref.get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        var data = doc.data();
+                        var groupId = data['groupid'];
+                        var userId = data['userid'];
+                        if (groupId == self.groupId && userId == self.userId) {
+                            hadInfo=true;
+                            self.gameName = data['gameUser'];
+                            self.work = data['gameWork'];
+                        }
+                    });
 
-                //         }
-                //     }
-                // }
+                    if(hadInfo){
+                        self.isFirst = false;
+
+                    }else{
+                        self.isFirst = true;
+                    }
+                });
 
             }
 
@@ -104,7 +102,8 @@
             submitForm: function () {
                 var today = new Date();
                 var self = this;
-                this.loading=true;
+                this.loading = true;
+                var ref = self.ref;
                 var currentDateTime =
 
                     today.getFullYear() + '/' +
@@ -114,23 +113,40 @@
                     today.getDate() + '日 ' +
 
                     today.getHours() + ':' + today.getMinutes();
-                // $.ajax({
-                //     type: "post",
-                //     url: "https://script.google.com/macros/s/AKfycbyq_Pqe593G_Z2kz3U2niiUGDOqDHx6-a8vTu8nKuZMz7oWKKU/exec",
-                //     data: {
-                //         "time": currentDateTime,
-                //         "groupID": self.groupId,
-                //         "userID": self.userId,
-                //         "name": self.gameName,
-                //         "work": self.work,
-                //         "game": self.game
-                //     },
-
-                //     success: function (response) {
-                //         alert("簽到成功");
-                //         window.location.reload();
-                //     }
-                // });
+                if (this.isFirst) {
+                    var setDoc = ref.doc(self.userId);
+                    setDoc.set({
+                        gameUser: self.gameName,
+                        gameWork: self.work,
+                        groupid: self.groupId,
+                        time: currentDateTime,
+                        userName: self.lineName,
+                        userid: self.userId,
+                        password: self.password
+                    }).then(() => {
+                        alert("簽到成功");
+                        window.location.reload();
+                    });
+                } else {
+                    var setDoc = ref.doc(self.userId);
+                    setDoc.get().then(doc => {
+                        var data = doc.data()
+                        if (data['password'] != self.password) {
+                            alert("驗證碼錯誤無法送出")
+                            window.location.reload();
+                        } else {
+                            setDoc.update({
+                                gameUser: self.gameName,
+                                gameWork: self.work,
+                                time: currentDateTime,
+                                userName: self.lineName,
+                            }).then(() => {
+                                alert("簽到成功");
+                                window.location.reload();
+                            });
+                        }
+                    });
+                }
 
             }
 
