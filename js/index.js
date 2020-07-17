@@ -65,6 +65,7 @@
             if (this.args.groupId && this.args.userId) {
                 this.groupId = this.args.groupId;
                 this.userId = this.args.userId;
+                Base64.extendString();
                 this.lineName= this.args.displayName.fromBase64();
                 this.isFirst = (this.args.isFirst == '1') ? false : true;
                 // var xhr = new XMLHttpRequest();
