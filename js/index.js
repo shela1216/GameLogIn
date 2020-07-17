@@ -11,6 +11,7 @@
         lineName: "",
         params: params,
         gameName: "",
+        groupName:"",
         isFirst: true,
         work: "",
         loading: false,
@@ -66,10 +67,12 @@
             if (this.args.groupId && this.args.userId) {
                 this.groupId = this.args.groupId;
                 this.userId = this.args.userId;
-                this.lineName = BASE64.decode(this.args.UserName)
+                this.lineName = BASE64.decode(this.args.UserName);
+                this.groupName= BASE64.decode(this.args.groupName);
                 this.AllowLogIn = true;
                 var self = this;
                 var hadInfo =false;
+                
                 this.ref.get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                         var data = doc.data();

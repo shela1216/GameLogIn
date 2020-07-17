@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>機器人簽到系統</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css?v1.0.3">
+    <link rel="stylesheet" href="css/style.css?v1.0.4">
 </head>
 
 <body>
@@ -15,10 +15,10 @@
         <section>
             <div class="container" id="content">
                 <div class="block-heading">
-                    <h2>機器人簽到系統</h2>
-                    <p>By Shela V1.0.2 </p>
+                    <h2>{{groupName}} 簽到系統</h2>
+                    <p>此簽到系統僅提供本人簽到，請核對底下Line資料是否為本人所有，初次簽到請設定驗證碼，為未來修改簽到驗證用</p>
                 </div>
-                <div class="row form-style">
+                <div class="row form-style" v-if="AllowLogIn">
                     <div class="simpleInfo">
                         <h3 class="title">Line資料</h3>
                         <div class="item">
@@ -102,10 +102,13 @@
                         </div>
                     </div>
 
-                    <div class="col col-12" v-if="!AllowLogIn">
-                        <p class="bg-danger">驗證身分錯誤</p>
+                </div>
+                <div class="row form-style" v-if="!AllowLogIn">
+                    <div class="simpleInfo center">
+                        <p class="danger">驗證身分錯誤</p>
                     </div>
                 </div>
+                <div class="copyright">copyRight@shela v1.0.4</div>
             </div>
         </section>
 
@@ -148,7 +151,7 @@
         }
     </script>
     <script src="js/b64.js"></script>
-    <script src="js/index.js?v1.0.3"></script>
+    <script src="js/index.js?v1.0.4"></script>
 </body>
 
 </html>
