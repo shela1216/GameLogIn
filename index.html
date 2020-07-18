@@ -49,44 +49,9 @@
                             <div class="form-group col-sm-12">
                                 <label >遊戲職業</label>
                                 <div class="col-sm-12 text-left">
-                                    <div class="radio-inline">
+                                    <div class="radio-inline" v-for="(item, index) in allWork" :key="index">
                                         <label>
-                                            <input type="radio" name="work" id="work1" value="斧" v-model="work"> 斧
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" name="work" id="work2" value="棒" v-model="work"> 棒
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" name="work" id="work3" value="爪" v-model="work"> 爪
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" name="work" id="work4" value="槍" v-model="work"> 槍
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" name="work" id="work5" value="弓" v-model="work"> 弓
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" name="work" id="work6" value="迴旋鏢" v-model="work"> 迴旋鏢
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" name="work" id="work6" value="投斧" v-model="work"> 投斧
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" name="work" id="work6" value="投石" v-model="work"> 投石
+                                            <input type="radio" name="work"  :value="item.name" v-model="work"> {{item.name}}
                                         </label>
                                     </div>
                                 </div>
@@ -116,8 +81,8 @@
     </div>
 
 
-    <script src="js/vue.min.js"></script>
-    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js'></script> -->
+    <!-- <script src="js/vue.min.js"></script> -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js'></script>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
