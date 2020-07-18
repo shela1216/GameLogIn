@@ -117,7 +117,7 @@
 
                     today.getHours() + ':' + today.getMinutes();
                 if (this.isFirst) {
-                    var setDoc = ref.doc(self.userId);
+                    var setDoc = ref.doc(self.userId+self.groupid);
                     setDoc.set({
                         gameUser: self.gameName,
                         gameWork: self.work,
@@ -131,7 +131,7 @@
                         window.location.reload();
                     });
                 } else {
-                    var setDoc = ref.doc(self.userId);
+                    var setDoc = ref.doc(self.userId+self.groupid);
                     setDoc.get().then(doc => {
                         var data = doc.data()
                         if (data['password'] != self.password) {
