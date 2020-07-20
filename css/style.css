@@ -64,4 +64,4 @@ h1 { text-shadow: 0 0 0.3em #fff, 0 0 0.3em #fff, 0 0 0.3em #fff, 0 0 0.3em #fff
 .questionBox .ques_q { font-weight: bold; }
 .questionBox .ques_a { font-size: 20px; color: #b42f30; }
 
-.copyright { color: #79818a; font-size: 12px; text-align: center; margin-top: 10px; }
+.copyright { color: #79818a; font-size: 12px; text-align: center; margin-top: 10px; text-shadow: white 0.1em 0.1em 0.2em; }
