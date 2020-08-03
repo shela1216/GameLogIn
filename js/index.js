@@ -7,7 +7,7 @@
         groupId: "",
         userId: "",
         password: "",
-        game: game,
+        game: "",
         lineName: "",
         params: params,
         gameName: "",
@@ -16,7 +16,7 @@
         work: "",
         loading: false,
         ref: db.collection('botMember'),
-        workref:db.collection('botWork'),
+        workref:"",
         allWork:[]
     }
     var vm = new Vue({
@@ -66,7 +66,7 @@
             window.addEventListener('resize', this.heightChange);
         },
         created: function () {
-            if (this.args.groupId && this.args.userId) {
+            if (this.args.groupId && this.args.userId && this.args.game) {
                 this.groupId = this.args.groupId;
                 this.userId = this.args.userId;
                 this.lineName = decodeURIComponent(escape(window.atob(this.args.UserName)));
@@ -74,14 +74,26 @@
                 this.AllowLogIn = true;
                 var self = this;
                 var hadInfo =false;
-
-                this.workref.get().then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
+                var game = db.collection('botInfo').doc(this.args.game);
+                var work;
+                if(game){
+                    game.get().then(doc => {
                         var data = doc.data();
-                        self.allWork.push(data);
+                        self.game=data['gameName'];
+                        work = data['gamework'];
+                        this.workref=db.collection(work);
 
-                    })
-                })
+                        this.workref.get().then(querySnapshot => {
+                            querySnapshot.forEach(doc => {
+                                var data = doc.data();
+                                self.allWork.push(data);
+        
+                            })
+                        })
+                        
+                    });   
+                }
+
                 
                 this.ref.get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
